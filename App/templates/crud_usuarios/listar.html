@@ -1,0 +1,42 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+
+<div class="right_col" role="main">
+    <h1>Lista de Usuarios</h1>
+
+    <div class="table-responsive">
+        <table class="table table-hover border-dark">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">eMail</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Fecha de Nacimineto</th>
+              <th scope="col">Fecha de Registro</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+            {% for u in usuarios %}
+             <tr>
+              <th scope="row">{{u.id}}</th>
+              <td>{{u.nombre}}</td>
+              <td>{{u.apellido}}</td>
+              <td>{{u.email}}</td>
+              <td>{{u.telefono}}</td>
+              <td>{{u.f_nac}}</td>
+              <td>{{u.f_registro}}</td>
+              </tr>
+            {% endfor %}
+          
+          </tbody>
+      
+        </table>
+      </div>
+</div>
+
+
+{% endblock %}
