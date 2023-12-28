@@ -11,4 +11,4 @@ class Usuarios(models.Model):
     f_nac = models.DateField(null = True)
     f_registro = models.DateTimeField(auto_now_add = True, null = True)
     class Meta:
-        db_table : 'usuarios'
+        db_table = 'usuarios'

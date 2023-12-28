@@ -13,18 +13,18 @@ def index(request):
 def listar(request): 
     users = Usuarios.objects.all()
     datos = {'usuarios' : users}
-    return render(request,"crud_usuarios/listar.html",datos)
+    return render(request,"crud_usuarios/listar.html", datos)
 
 def agregar(request):
-    if request.method=='post':
-        if request.post.get('nombre') and request.post.get('apellido') and request.post.get('email') and request.post.get('telefono') and request.post.get('f_nac'):
+    if request.method =='POST':
+        if request.POST.get('nombre') and request.POST.get('apellido') and request.POST.get('email') and request.POST.get('telefono') and request.POST.get('f_nac'):
             user = Usuarios()
-            user.nombre = request.post.get('nombre')
-            user.apellido = request.post.get('apellido')
-            user.email = request.post.get('email')
-            user.telefono = request.post.get('telefono')
-            user.f_nac = request.post.get('f_nac')
-            user.save()
+            user.nombre = request.POST.get('nombre')
+            user.apellido = request.POST.get('apellido')
+            user.email = request.POST.get('email')
+            user.telefono = request.POST.get('telefono')
+            user.f_nac = request.POST.get('f_nac')
+            user.save()    
             return redirect('listar')
     else:
         return render(request,"crud_usuarios/agregar.html")
