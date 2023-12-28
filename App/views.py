@@ -30,8 +30,36 @@ def agregar(request):
         return render(request,"crud_usuarios/agregar.html")
     
 
-def actualizar(request): 
-    return render(request,"crud_usuarios/actualizar.html")
+def actualizar(request):
+    if request.method == 'POST':
+        if request.POST.get('id') and request.POST.get('nombre') and request.POST.get('apellido') and request.POST.get('email') and request.POST.get('telefono') and request.POST.get('f_nac'):
+            id_old = request.POST.get('id')
+            user_old = Usuarios()
+            user_old = Usuarios.objects.get(id = id_old)
+            
+            user = Usuarios()
+            user.id = request.POST.get('id')
+            user.nombre = request.POST.get('nombre')
+            user.apellido = request.POST.get('apellido')
+            user.email = request.POST.get('email')
+            user.telefono = request.POST.get('telefono')
+            user.f_nac = request.POST.get('f_nac')
+            user.f_registro = user_old.f_registro
+            user.save()    
+            return redirect('listar')
+    else:
+        users = Usuarios.objects.all()
+        datos = {'usuarios' : users} 
+        return render(request,"crud_usuarios/actualizar.html", datos)
 
 def eliminar(request): 
-    return render(request,"crud_usuarios/eliminar.html")
+    if request.method == 'POST':
+        if request.POST.get('id'):
+            id_eliminada = request.POST.get('id')
+            tupla = Usuarios.objects.get( id = id_eliminada )
+            tupla.delete()
+            return redirect('listar')
+    else:    
+        users = Usuarios.objects.all()
+        datos = {'usuarios' : users} 
+        return render(request,"crud_usuarios/eliminar.html", datos)
