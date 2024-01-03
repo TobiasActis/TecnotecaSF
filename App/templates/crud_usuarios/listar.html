@@ -5,6 +5,14 @@
 <div class="right_col" role="main">
     <h1>Lista de Usuarios</h1>
 
+    <div style="display: inline-block;">
+      <form action="" method="POST" style="float: left;">
+        {% csrf_token %}
+        <input type="text" name="keyword" id="keyword" class="form-control" style="width: 80% ; display: inline-block;">
+        <button type="submit" name="search" class="btn btn-success" ><i class="fa fa-search"></i></button>
+      </form>
+      <button name="agregar" class="btn btn-primary" onclick="window.location.href = 'agregar' "><i class="fa fa-plus"></i> Nuevo Usuario</button>
+    </div>
     <div class="table-responsive">
         <table class="table table-hover border-dark">
           <thead>
@@ -16,6 +24,7 @@
               <th scope="col">Telefono</th>
               <th scope="col">Fecha de Nacimineto</th>
               <th scope="col">Fecha de Registro</th>
+              <th scope="col">Accion</th>
             </tr>
           </thead>
           <tbody>
@@ -29,6 +38,10 @@
                 <td>{{ u.telefono }}</td>
                 <td>{{ u.f_nac }}</td>
                 <td>{{ u.f_registro }}</td>
+                <td> 
+                  <button class="btn btn-warning" onclick="window.location.href='actualizar/{{ u.id }}'"><i class="fa fa-refresh"></i></button>
+                  <button class="btn btn btn-danger" onclick="window.location.href='eliminar/{{ u.id }}'"><i class="fa fa-trash"></i></button>
+                </td>
               </tr>
             {% endfor %}
           

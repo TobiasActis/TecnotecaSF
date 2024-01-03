@@ -5,7 +5,7 @@
 <div class="right_col" role="main">
     <h1>Eliminar Usuarios</h1>
 
-    <form action="eliminar" method="POST">
+    <form action="" method="POST">
         {% csrf_token %}
         <div class="form-group row">
             <label for="id" class="col-2 col-form-label">ID Usuario</label> 
@@ -16,7 +16,7 @@
                 </div> 
                 <select id="id" name="id">
                   {% for u in usuarios %}
-                    <option value="{{ u.id }}">{{ u.id }}</option>
+                    <option value="{{ u.id }}" {% if u.id == usuario.id %} selected {% endif %}>{{ u.id }} - {{ u.nombre }} - {{ u.apellido }}</option>
                   {% endfor %}  
                 </select>
               </div>
@@ -24,6 +24,7 @@
         </div>
         <div class="form-group row">
             <div class="offset-2 col-10">
+              <button name="back"  class="btn btn-primary" onclick="history.back(); return false;"><i class="fa fa-arrow-left"></i> Volver</button>
               <button name="submit" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar Usuario</button>
             </div>
         </div>
