@@ -1,0 +1,34 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+
+<div class="right_col" role="main">
+    <h1>Eliminar Evento</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="id" class="col-2 col-form-label">ID Evento</label> 
+            <div class="col-10">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fas fa-id-badge"></i>
+                </div> 
+                <select id="id" name="id">
+                  {% for u in eventos %}
+                    <option value="{{ u.id }}" {% if u.id == evento.id %} selected {% endif %}>{{ u.id }} - {{ u.descripcion }}</option>
+                  {% endfor %}  
+                </select>
+              </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-2 col-10">
+              <button name="back"  class="btn btn-primary" onclick="history.back(); return false;"><i class="fa fa-arrow-left"></i> Volver</button>
+              <button name="submit" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar Evento</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

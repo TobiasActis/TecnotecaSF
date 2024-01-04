@@ -10,5 +10,9 @@ urlpatterns = [
     path('agregar',views.agregar, name= "agregar"),
     path('actualizar/<int:idUsuario>',views.actualizar, name= "actualizar"),
     path('eliminar/<int:idUsuario>',views.eliminar, name= "eliminar"),
+    path('listarEventos',views.listarEventos, name= "listarEventos"),
+    path('agregarEventos',views.agregarEventos, name= "agregarEventos"),
+    path('actualizarEventos/<int:idEvento>',views.actualizarEventos, name= "actualizarEventos"),
+    path('eliminarEventos/<int:idEvento>',views.eliminarEventos, name= "eliminarEventos"),
 
 ]

@@ -2,6 +2,7 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponse 
 from .models import Usuarios
+from .models import Eventos
 from django.utils.timezone import now
 from django.db.models import Q
 # Create your views here.
@@ -100,3 +101,87 @@ def eliminar(request, idUsuario):
         user = None
         datos = {'usuarios': users, 'usuario': user} 
         return render(request, "crud_usuarios/eliminar.html", datos)
+
+
+
+def listarEventos(request): 
+    if request.method == 'POST':
+        palabra = request.POST.get('keyword') 
+        lista = Eventos.objects.all()
+
+        if palabra is not None:
+            busqueda = lista.filter(
+                Q(id__icontains = palabra) |
+                Q(descripcion__icontains = palabra) 
+            )
+            datos = {'eventos' : busqueda}
+            return render(request,"crud_eventos/listarEventos.html", datos)
+        else:
+            datos = {'eventos' : lista}
+            return render(request,"crud_eventos/listarEventos.html", datos)
+    else:    
+        events = Eventos.objects.order_by('-id')[:10]
+        datos = {'eventos' : events}
+        return render(request,"crud_eventos/listarEventos.html", datos)
+    
+def agregarEventos(request):
+    if request.method =='POST':
+        if request.POST.get('descripcion') and request.POST.get('fecha') and request.POST.get('hora'):
+            event = Eventos()
+            event.descripcion = request.POST.get('descripcion')
+            event.fecha = request.POST.get('fecha')
+            event.hora = request.POST.get('hora')
+            event.save()    
+            return redirect('listar')
+    else:
+        return render(request,"crud_eventos/agregarEventos.html")
+    
+
+def actualizarEventos(request, idEvento):
+    try:
+        if request.method == 'POST':
+            if request.POST.get('id') and request.POST.get('descripcion') and request.POST.get('fecha') and request.POST.get('hora'):
+                id_old = request.POST.get('id')
+                event_old = Eventos()
+                event_old = Eventos.objects.get(id = id_old)
+                
+                event = Usuarios()
+                event.id = request.POST.get('id')
+                event.descripcion = request.POST.get('descripcion')
+                event.fecha = request.POST.get('fecha')
+                event.hora = request.POST.get('hora')
+                event.f_registro = event_old.f_registro
+                event.save()    
+                return redirect('listarEventos')
+        else:
+            events = Eventos.objects.all()
+            event = Eventos.objects.get( id =  idEvento)
+            datos = {'eventos' : events , 'evento' : event} 
+            return render(request,"crud_eventos/actualizarEventos.html", datos)
+   
+    except Eventos.DoesNotExist:
+        events = Eventos.objects.all()
+        event = None
+        datos = {'eventos' : events , 'evento' : event} 
+        return render(request,"crud_eventos/actualizarEventos.html", datos)
+    
+
+def eliminarEventos(request, idEvento): 
+    try:
+        if request.method == 'POST':
+            if request.POST.get('id'):
+                id_eliminada = request.POST.get('id')
+                tupla = Eventos.objects.get(id=id_eliminada)
+                tupla.delete()
+                return redirect('listarEventos')
+        else:    
+            events = Eventos.objects.all()
+            event = Eventos.objects.get(id=idEvento)
+            datos = {'eventos': events, 'evento': event} 
+            return render(request, "crud_eventos/eliminarEventos.html", datos)
+    
+    except Eventos.DoesNotExist:
+        events = Eventos.objects.all()
+        event = None
+        datos = {'eventos': events, 'event': event} 
+        return render(request, "crud_eventos/eliminarEventos.html", datos)

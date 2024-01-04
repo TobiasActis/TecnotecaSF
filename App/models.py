@@ -12,3 +12,12 @@ class Usuarios(models.Model):
     f_registro = models.DateTimeField(auto_now_add = True, null = True)
     class Meta:
         db_table = 'usuarios'
+
+class Eventos(models.Model):
+    id = models.IntegerField(primary_key = True)
+    descripcion = models.CharField(max_length = 200, null = False)
+    fecha = models.DateField(null = False)
+    hora = models.TimeField(null = False)
+    f_registro = models.DateTimeField(auto_now_add = True, null = True)
+    class Meta:
+        db_table = 'eventos'

@@ -1,0 +1,51 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+
+<div class="right_col" role="main">
+    <h1>Lista de Eventos</h1>
+
+    <div style="display: inline-block;">
+      <form action="" method="POST" style="float: left;">
+        {% csrf_token %}
+        <input type="text" name="keyword" id="keyword" class="form-control" style="width: 80% ; display: inline-block;">
+        <button type="submit" name="search" class="btn btn-success" ><i class="fa fa-search"></i></button>
+      </form>
+      <button name="agregar" class="btn btn-primary" onclick="window.location.href = 'agregarEventos' "><i class="fa fa-plus"></i> Nuevo Evento</button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover border-dark">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Fecha de Registro</th>
+              <th scope="col">Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+            {% for u in eventos %}
+              <tr>
+                <th scope="row">{{ u.id }}</th>
+                <td>{{ u.descripcion }}</td>
+                <td>{{ u.fecha }}</td>
+                <td>{{ u.hora }}</td>
+                <td>{{ u.f_registro }}</td>
+                <td> 
+                  <button class="btn btn-warning" onclick="window.location.href='actualizarEventos/{{ u.id }}'"><i class="fa fa-refresh"></i></button>
+                  <button class="btn btn btn-danger" onclick="window.location.href='eliminarEventos/{{ u.id }}'"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+            {% endfor %}
+          
+          </tbody>
+      
+        </table>
+      </div>
+</div>
+
+
+{% endblock %}

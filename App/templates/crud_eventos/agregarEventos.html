@@ -1,0 +1,66 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+
+<div class="right_col" role="main">
+    <h1>Agregar Eventos</h1>
+
+    <form action="agregarEventos" method="POST">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="id" class="col-2 col-form-label">ID Evento</label> 
+            <div class="col-10">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fas fa-id-badge"></i>
+                </div> 
+                <select id="id" name="id" class="form-control">
+                  {% for u in eventos %}
+                    <option value="{{ u.id }}" {% if u.id == evento.id %} selected {% endif %}>{{ u.id }}</option>
+                  {% endfor %}  
+                </select>
+              </div>
+            </div>
+        </div>
+        <div class="form-group row">
+          <label for="descripcion" class="col-2 col-form-label">Descripcion</label> 
+          <div class="col-10">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-address-card"></i>
+              </div> 
+              <input id="descripcion" name="descripcion" type="text" required="required" class="form-control" value="{{ evento.descripcion }}">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="fecha" class="col-2 col-form-label">Fecha</label> 
+          <div class="col-10">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-address-card-o"></i>
+              </div> 
+              <input id="fecha" name="fecha" type="date" required="required" class="form-control" value="{{ evento.fecha }}">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="hora" class="col-2 col-form-label">Hora</label> 
+          <div class="col-10">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-inbox"></i>
+              </div> 
+              <input id="hora" name="hora" type="time" required="required" class="form-control" value="{{ evento.hora }}">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <button name="submit"  class="btn btn-primary" onclick="history.back(); return false"><i class="fa fa-arrow-left"></i> Volver</button>
+            <button name="submit" type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Actualizar Evento</button>
+          </div>
+        </div>
+      </form>
+</div>
+{% endblock %}
